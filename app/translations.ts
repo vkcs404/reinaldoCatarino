@@ -40,14 +40,14 @@ export const translations = {
 
     twoPaths: {
       eyebrow: "Two Paths, One Way",
-      title1: "Two Paths.",
+      title1: "Two Paths,",
       title2: "One Way.",
       personal: {
         tag: "Personal Growth",
         title: "Leadership starts from within",
         sub: "A journey of self-awareness, presence, and inner transformation.",
         items: [
-          { label: "Energetic type", desc: "Understand your natural energy and how you show up." },
+          { label: "Energetic Type", desc: "Understand your natural energy and how you show up." },
           { label: "What's your superpower?", desc: "Discover the unique strengths that define you." },
           { label: "Power of words", desc: "Language shapes reality — learn to use it intentionally." },
           { label: "13 energies of space", desc: "Expand awareness of the environments that shape behavior." },
@@ -193,8 +193,8 @@ export const translations = {
 
     hero: {
       eyebrow: "Presença · Consciência · Inteligência Emocional",
-      headline1: "MINDFULNESS",
-      headline2: "LIDERANÇA",
+      headline1: "Liderança",
+      headline2: "Conciente",
       question: "Você é um líder que inspira, ou um líder que gerencia uma equipe funcional?",
       body: "A grande liderança vai além de manter a equipe nos trilhos — é sobre inspirar pessoas a se moverem com propósito. Quando direção e inspiração se encontram, as equipes não apenas funcionam — elas florescem.",
       personalQuestion: "Como você experiencia a liderança na sua vida pessoal: em casa, com seus filhos e familiares, no trânsito indo e voltando do trabalho?",

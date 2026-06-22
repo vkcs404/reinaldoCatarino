@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { translations, type Locale } from "./translations";
 
 const LOCALES: Locale[] = ["en", "pt", "es"];
@@ -8,6 +8,45 @@ const LOCALES: Locale[] = ["en", "pt", "es"];
 export default function Home() {
   const [locale, setLocale] = useState<Locale>("en");
   const t = translations[locale];
+
+  const questionRef = useRef<HTMLElement>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
+  const whyRef = useRef<HTMLElement>(null);
+  const whyImgRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    let rafId: number;
+    let lastUpdate = 0;
+    const throttleMs = 16; // ~60fps
+
+    function applyParallax(section: HTMLElement | null, img: HTMLImageElement | null) {
+      if (!section || !img) return;
+      const rect = section.getBoundingClientRect();
+      const windowH = window.innerHeight;
+      const progress = 1 - (rect.bottom / (windowH + rect.height));
+      const translate = (progress - 0.5) * 30;
+      img.style.transform = `translateY(${translate}%)`;
+    }
+
+    function onScroll() {
+      const now = Date.now();
+      if (now - lastUpdate < throttleMs) return;
+      lastUpdate = now;
+
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        applyParallax(questionRef.current, imgRef.current);
+        applyParallax(whyRef.current, whyImgRef.current);
+      });
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(rafId);
+    };
+  }, []);
 
   return (
     <main>
@@ -65,25 +104,53 @@ export default function Home() {
       </header>
 
       {/* ─── HERO ─── */}
-      <section className="section" style={{ paddingTop: 0, paddingBottom: 0 }}>
-        <div className="container hero-grid">
+      <section className="section" style={{ paddingTop: 0, paddingBottom: 0, position: "relative", overflow: "hidden" }}>
+        {/* Background image — estática, sem parallax */}
+        <img
+          src="/head.JPG"
+          alt=""
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "center center",
+            pointerEvents: "none",
+            userSelect: "none",
+            zIndex: 0,
+          }}
+        />
+        {/* Overlay — área de texto bem escura à esquerda, imagem visível à direita */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: "linear-gradient(90deg, rgba(8,6,4,0.92) 0%, rgba(8,6,4,0.88) 45%, rgba(8,6,4,0.55) 65%, rgba(8,6,4,0.2) 100%)",
+            zIndex: 0,
+          }}
+        />
+
+        <div className="container hero-grid" style={{ position: "relative", zIndex: 1 }}>
 
           <div>
-            <div className="eyebrow">{t.hero.eyebrow}</div>
+            <div className="eyebrow" style={{ color: "rgba(255,255,255,0.55)" }}>{t.hero.eyebrow}</div>
 
-            <h1 className="title-hero">
+            <h1 className="title-hero" style={{ color: "white" }}>
               {t.hero.headline1}
               <br />
-              <em style={{ fontStyle: "italic", color: "#5c4e43" }}>{t.hero.headline2}</em>
+              <em style={{ fontStyle: "italic", color: "#c8b89f" }}>{t.hero.headline2}</em>
             </h1>
 
-            <p className="text-lead" style={{ maxWidth: 580 }}>
-              <span style={{ display: "block", fontSize: "1.25em", fontWeight: 700, color: "#2e2520", lineHeight: 1.35, marginBottom: 14 }}>
+            <p className="text-lead" style={{ maxWidth: 580, color: "rgba(255,255,255,0.85)" }}>
+              <span style={{ display: "block", fontSize: "1.25em", fontWeight: 700, color: "white", lineHeight: 1.35, marginBottom: 14 }}>
                 {t.hero.question}
               </span>
               {t.hero.body}
             </p>
-            <p className="text-lead" style={{ maxWidth: 580, marginTop: 20, fontStyle: "italic", color: "var(--muted)" }}>
+            <p className="text-lead" style={{ maxWidth: 580, marginTop: 20, fontStyle: "italic", color: "rgba(255,255,255,0.6)" }}>
               {t.hero.personalQuestion}
             </p>
 
@@ -98,12 +165,12 @@ export default function Home() {
 
             <div className="tagline-strip">
               {t.hero.pills.map((pill) => (
-                <span key={pill} className="tagline-pill">{pill}</span>
+                <span key={pill} className="tagline-pill" style={{ color: "rgba(255,255,255,0.7)", borderColor: "rgba(255,255,255,0.2)" }}>{pill}</span>
               ))}
             </div>
           </div>
 
-          <div className="hero-card">
+          <div className="hero-card" style={{ display: "none" }}>
             <div className="hero-card-noise" />
             <div className="hero-card-inner">
               <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
@@ -137,20 +204,61 @@ export default function Home() {
       </section>
 
       {/* ─── QUESTION / INTRO ─── */}
-      <section className="section" style={{ paddingTop: 80 }}>
-        <div className="container">
+      <section
+        ref={questionRef}
+        className="section"
+        style={{ paddingTop: 120, paddingBottom: 120, position: "relative", overflow: "hidden" }}
+      >
+        {/* Background image — parallax otimizado */}
+        <img
+          ref={imgRef}
+          src="/the_question.PNG"
+          alt=""
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            left: 0,
+            top: "-20%",
+            width: "100%",
+            height: "140%",
+            objectFit: "cover",
+            objectPosition: "center center",
+            pointerEvents: "none",
+            userSelect: "none",
+            willChange: "transform",
+            backfaceVisibility: "hidden",
+            transform: "translate3d(0, 0, 0)",
+          }}
+        />
+        {/* Overlay escuro para legibilidade */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: "linear-gradient(to bottom, rgba(10,8,6,0.50) 0%, rgba(10,8,6,0.70) 100%)",
+          }}
+        />
+
+        <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <div className="section-label">
-            <div className="eyebrow">{t.questionSection.eyebrow}</div>
-            <div className="section-label-line" />
+            <div className="eyebrow" style={{ color: "rgba(255,255,255,0.55)" }}>
+              {t.questionSection.eyebrow}
+            </div>
+            <div className="section-label-line" style={{ background: "rgba(255,255,255,0.15)" }} />
           </div>
 
           <div className="grid-2" style={{ alignItems: "start", gap: 60 }}>
             <div>
-              <h2 className="title-xl">{t.questionSection.title}</h2>
+              <h2 className="title-xl" style={{ color: "white" }}>
+                {t.questionSection.title}
+              </h2>
             </div>
             <div>
-              <p className="text-lead">{t.questionSection.lead}</p>
-              <p className="text-body" style={{ marginTop: 20 }}>
+              <p className="text-lead" style={{ color: "rgba(255,255,255,0.82)" }}>
+                {t.questionSection.lead}
+              </p>
+              <p className="text-body" style={{ marginTop: 20, color: "rgba(255,255,255,0.62)" }}>
                 {t.questionSection.body}
               </p>
             </div>
@@ -242,15 +350,43 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div className="merge-bottom">
-              <p className="merge-eyebrow">{t.twoPaths.mergeEyebrow}</p>
-              <h3 className="title-md" style={{ margin: "10px 0 12px" }}>{t.twoPaths.mergeTitle}</h3>
-              <p className="text-body" style={{ maxWidth: 560, margin: "0 auto 28px" }}>
+            <div className="merge-bottom" style={{ position: "relative", overflow: "hidden", isolation: "isolate", padding: "100px 60px 80px" }}>
+              {/* Video de fundo */}
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  zIndex: -2,
+                  pointerEvents: "none",
+                }}
+              >
+                <source src="/two_paths.MP4" type="video/mp4" />
+              </video>
+              {/* Overlay escuro para legibilidade do texto */}
+              <div
+                aria-hidden="true"
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  background: "linear-gradient(180deg, rgba(10,8,6,0.78) 0%, rgba(10,8,6,0.88) 100%)",
+                  zIndex: -1,
+                }}
+              />
+              <p className="merge-eyebrow" style={{ color: "rgba(255,255,255,0.5)" }}>{t.twoPaths.mergeEyebrow}</p>
+              <h3 className="title-md" style={{ margin: "10px 0 12px", color: "white" }}>{t.twoPaths.mergeTitle}</h3>
+              <p className="text-body" style={{ maxWidth: 560, margin: "0 auto 28px", color: "rgba(255,255,255,0.7)" }}>
                 {t.twoPaths.mergeBody}
               </p>
               <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
                 <a className="btn btn-primary" href="#contact">{t.twoPaths.ctaPrimary}</a>
-                <a className="btn btn-secondary" href="#how-we-help">{t.twoPaths.ctaSecondary}</a>
+                <a className="btn btn-secondary" href="#how-we-help" style={{ borderColor: "rgba(255,255,255,0.3)", color: "white" }}>{t.twoPaths.ctaSecondary}</a>
               </div>
             </div>
           </div>
@@ -258,34 +394,70 @@ export default function Home() {
       </section>
 
       {/* ─── WHY DIFFERENT ─── */}
-      <section id="organizations" className="section" style={{ background: "var(--paper)" }}>
-        <div className="container">
+      <section
+        ref={whyRef}
+        id="organizations"
+        className="section"
+        style={{ position: "relative", overflow: "hidden" }}
+      >
+        {/* Background image parallax otimizado */}
+        <img
+          ref={whyImgRef}
+          src="/diference.JPG"
+          alt=""
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            left: 0,
+            top: "-20%",
+            width: "100%",
+            height: "140%",
+            objectFit: "cover",
+            objectPosition: "center 40%",
+            pointerEvents: "none",
+            userSelect: "none",
+            willChange: "transform",
+            backfaceVisibility: "hidden",
+            transform: "translate3d(0, 0, 0)",
+          }}
+        />
+        {/* Overlay — mais denso que o anterior para os cards ficarem legíveis */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: "linear-gradient(to bottom, rgba(8,6,4,0.72) 0%, rgba(8,6,4,0.82) 100%)",
+          }}
+        />
+
+        <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <div className="section-label">
-            <div className="eyebrow">{t.whyDifferent.eyebrow}</div>
-            <div className="section-label-line" />
+            <div className="eyebrow" style={{ color: "rgba(255,255,255,0.45)" }}>{t.whyDifferent.eyebrow}</div>
+            <div className="section-label-line" style={{ background: "rgba(255,255,255,0.1)" }} />
           </div>
 
-          <h2 className="title-xl" style={{ maxWidth: 640, marginBottom: 0 }}>
+          <h2 className="title-xl" style={{ maxWidth: 640, marginBottom: 0, color: "white" }}>
             {t.whyDifferent.title}
           </h2>
 
           <div className="why-grid">
             {t.whyDifferent.cards.map((card) => (
-              <div key={card.num} className="card why-card">
-                <div className="why-number">{card.num}</div>
-                <h3>{card.title}</h3>
-                <p className="text-body">{card.body}</p>
+              <div key={card.num} className="card why-card" style={{ background: "rgba(255,255,255,0.18)", borderColor: "rgba(255,255,255,0.22)", backdropFilter: "blur(20px)" }}>
+                <div className="why-number" style={{ color: "rgba(255,255,255,0.08)" }}>{card.num}</div>
+                <h3 style={{ color: "white" }}>{card.title}</h3>
+                <p className="text-body" style={{ color: "rgba(255,255,255,0.62)" }}>{card.body}</p>
               </div>
             ))}
           </div>
 
-          <div className="quote-block" style={{ marginTop: 40 }}>
-            <blockquote>
+          <div className="quote-block" style={{ marginTop: 40, background: "rgba(255,255,255,0.05)", borderLeftColor: "rgba(122,101,82,0.8)" }}>
+            <blockquote style={{ color: "rgba(255,255,255,0.92)" }}>
               {t.whyDifferent.quote.split("\n").map((line, i) => (
                 <span key={i}>{line}{i === 0 && <br />}</span>
               ))}
             </blockquote>
-            <p style={{ marginTop: 16, color: "var(--muted)", fontSize: 14, fontWeight: 500 }}>
+            <p style={{ marginTop: 16, color: "rgba(255,255,255,0.4)", fontSize: 14, fontWeight: 500 }}>
               {t.whyDifferent.quoteAuthor}
             </p>
           </div>
@@ -325,7 +497,31 @@ export default function Home() {
       {/* ─── 11-SESSION HIGHLIGHT ─── */}
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
-          <div className="session-cta">
+          <div className="session-cta" style={{ position: "relative", overflow: "hidden", isolation: "isolate" }}>
+            <img
+              src="/signature_program.JPG"
+              alt=""
+              aria-hidden="true"
+              style={{
+                position: "absolute",
+                inset: 0,
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                objectPosition: "center center",
+                zIndex: -2,
+                pointerEvents: "none",
+              }}
+            />
+            <div
+              aria-hidden="true"
+              style={{
+                position: "absolute",
+                inset: 0,
+                background: "linear-gradient(160deg, rgba(10,8,6,0.86) 0%, rgba(10,8,6,0.7) 60%, rgba(10,8,6,0.86) 100%)",
+                zIndex: -1,
+              }}
+            />
             <div className="eyebrow" style={{ color: "rgba(255,255,255,0.4)" }}>{t.sessionHighlight.eyebrow}</div>
             <h2 className="title-xl" style={{ color: "white", marginTop: 14, maxWidth: 620 }}>
               {t.sessionHighlight.title}
@@ -337,13 +533,14 @@ export default function Home() {
             <div className="grid-3" style={{ gap: 14, marginBottom: 36 }}>
               {t.sessionHighlight.features.map((item) => (
                 <div key={item} style={{
-                  background: "rgba(255,255,255,0.06)",
-                  border: "1px solid rgba(255,255,255,0.08)",
+                  background: "rgba(255,255,255,0.08)",
+                  border: "1px solid rgba(255,255,255,0.1)",
                   borderRadius: 14,
                   padding: "14px 18px",
                   fontSize: 14,
                   color: "rgba(255,255,255,0.78)",
                   fontWeight: 300,
+                  backdropFilter: "blur(8px)",
                 }}>
                   {item}
                 </div>
@@ -358,8 +555,33 @@ export default function Home() {
       </section>
 
       {/* ─── LEADERSHIP MAP ─── */}
-      <section className="section section-dark">
-        <div className="container">
+      <section className="section section-dark" style={{ position: "relative", overflow: "hidden" }}>
+        <img
+          src="/framework.JPG"
+          alt=""
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "center center",
+            pointerEvents: "none",
+            userSelect: "none",
+            zIndex: 0,
+          }}
+        />
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: "linear-gradient(100deg, rgba(10,8,6,0.92) 0%, rgba(10,8,6,0.8) 45%, rgba(10,8,6,0.6) 100%)",
+            zIndex: 0,
+          }}
+        />
+        <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <div className="section-label">
             <div className="eyebrow">{t.leadershipMap.eyebrow}</div>
             <div className="section-label-line" style={{ background: "rgba(255,255,255,0.08)" }} />
@@ -381,7 +603,7 @@ export default function Home() {
 
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               {t.leadershipMap.faces.map((face) => (
-                <div key={face.label} className="map-face">
+                <div key={face.label} className="map-face" style={{ background: "rgba(255,255,255,0.06)", backdropFilter: "blur(8px)" }}>
                   <div className="map-face-dot" />
                   <div>
                     <div style={{ fontSize: 14, fontWeight: 500, marginBottom: 3 }}>{face.label}</div>
@@ -455,17 +677,42 @@ export default function Home() {
       </section>
 
       {/* ─── CONTACT ─── */}
-      <section id="contact" className="section" style={{ background: "var(--paper)" }}>
-        <div className="container">
+      <section id="contact" className="section" style={{ position: "relative", overflow: "hidden" }}>
+        <img
+          src="/contact.JPG"
+          alt=""
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "center center",
+            pointerEvents: "none",
+            userSelect: "none",
+            zIndex: 0,
+          }}
+        />
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: "linear-gradient(100deg, rgba(10,8,6,0.75) 0%, rgba(10,8,6,0.68) 50%, rgba(10,8,6,0.65) 100%)",
+            zIndex: 0,
+          }}
+        />
+        <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <div className="section-label">
-            <div className="eyebrow">{t.contact.eyebrow}</div>
-            <div className="section-label-line" />
+            <div className="eyebrow" style={{ color: "rgba(255,255,255,0.45)" }}>{t.contact.eyebrow}</div>
+            <div className="section-label-line" style={{ background: "rgba(255,255,255,0.1)" }} />
           </div>
 
           <div className="grid-2" style={{ alignItems: "start", gap: 60 }}>
             <div>
-              <h2 className="title-xl">{t.contact.title}</h2>
-              <p className="text-lead">{t.contact.lead}</p>
+              <h2 className="title-xl" style={{ color: "white" }}>{t.contact.title}</h2>
+              <p className="text-lead" style={{ color: "rgba(255,255,255,0.8)" }}>{t.contact.lead}</p>
 
               <div style={{ marginTop: 32, display: "flex", flexDirection: "column", gap: 18 }}>
                 {[
@@ -473,15 +720,15 @@ export default function Home() {
                   { label: t.contact.email, value: t.contact.emailValue },
                 ].map(({ label, value }) => (
                   <div key={label} style={{ display: "flex", gap: 12, alignItems: "baseline" }}>
-                    <span style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.16em", color: "var(--muted)", fontWeight: 600, flexShrink: 0 }}>{label}</span>
-                    <div style={{ flex: 1, height: 1, background: "var(--line)", alignSelf: "center" }} />
-                    <span style={{ fontSize: 15, color: "#2e2520", fontWeight: 400 }}>{value}</span>
+                    <span style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.16em", color: "rgba(255,255,255,0.4)", fontWeight: 600, flexShrink: 0 }}>{label}</span>
+                    <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.15)", alignSelf: "center" }} />
+                    <span style={{ fontSize: 15, color: "white", fontWeight: 400 }}>{value}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="card" style={{ padding: 36 }}>
+            <div className="card" style={{ padding: 36, background: "rgba(255,255,255,0.96)" }}>
               <form style={{ display: "grid", gap: 14 }}>
                 <input className="input" type="text" placeholder={t.contact.namePlaceholder} />
                 <input className="input" type="email" placeholder={t.contact.emailPlaceholder} />
