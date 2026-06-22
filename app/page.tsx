@@ -375,7 +375,7 @@ export default function Home() {
                 style={{
                   position: "absolute",
                   inset: 0,
-                  background: "linear-gradient(180deg, rgba(10,8,6,0.78) 0%, rgba(10,8,6,0.88) 100%)",
+                  background: "linear-gradient(20deg, rgba(10,8,6,0.78) 0%, rgba(10,8,6,0.88) 100%)",
                   zIndex: -1,
                 }}
               />
