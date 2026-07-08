@@ -62,7 +62,7 @@ export default function Home() {
       <header className="nav">
         <div className="container nav-inner">
           <a href="#" className="nav-brand" aria-label="Real Connection Workshops">
-            <span className="rc-logo" aria-hidden="true">RC</span>
+            <img src="/logo.png" className="rc-logo" alt="Real Connection Workshops" />
             <span className="nav-brand-word">
               <small>Real Connection</small>
               <strong>Workshops</strong>
@@ -332,11 +332,20 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Convergence arrows */}
-          <div className="converge-arrows">
-            <div className="converge-line converge-line-left" />
-            <div className="converge-center">↓</div>
-            <div className="converge-line converge-line-right" />
+          {/* Convergence — as duas trilhas afunilam em uma só */}
+          <div className="converge" aria-hidden="true">
+            <svg className="converge-svg" viewBox="0 0 400 96" preserveAspectRatio="xMidYMid meet">
+              <defs>
+                <linearGradient id="convGrad" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0" stopColor="#3b6ca3" />
+                  <stop offset="1" stopColor="#4a6645" />
+                </linearGradient>
+              </defs>
+              <path d="M64 6 C 64 56, 200 46, 200 76" fill="none" stroke="#3b6ca3" strokeWidth="1.6" strokeLinecap="round" strokeOpacity="0.45" />
+              <path d="M336 6 C 336 56, 200 46, 200 76" fill="none" stroke="#4a6645" strokeWidth="1.6" strokeLinecap="round" strokeOpacity="0.45" />
+              <circle cx="200" cy="76" r="11" fill="none" stroke="url(#convGrad)" strokeOpacity="0.28" strokeWidth="1" />
+              <circle cx="200" cy="76" r="5" fill="url(#convGrad)" />
+            </svg>
           </div>
 
           {/* Merged card */}
@@ -363,6 +372,13 @@ export default function Home() {
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* conector discreto até a jornada */}
+          <div className="converge-tail" aria-hidden="true"><span>↓</span></div>
+
+          {/* 11-Session Journey — card próprio, 4 cantos arredondados */}
+          <div className="card merge-video-card">
             <div className="merge-bottom" style={{ position: "relative", overflow: "hidden", isolation: "isolate", padding: "100px 60px 80px" }}>
               {/* Video de fundo */}
               <video
