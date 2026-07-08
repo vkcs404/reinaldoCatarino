@@ -13,6 +13,13 @@ export default function Home() {
   const imgRef = useRef<HTMLImageElement>(null);
   const whyRef = useRef<HTMLElement>(null);
   const whyImgRef = useRef<HTMLImageElement>(null);
+  const booksRef = useRef<HTMLDivElement>(null);
+
+  function scrollBooks(dir: number) {
+    const el = booksRef.current;
+    if (!el) return;
+    el.scrollBy({ left: el.clientWidth * 0.8 * dir, behavior: "smooth" });
+  }
 
   useEffect(() => {
     let rafId: number;
@@ -54,10 +61,13 @@ export default function Home() {
       {/* ─── NAV ─── */}
       <header className="nav">
         <div className="container nav-inner">
-          <div className="nav-brand">
-            <small>Mindfulness Leadership</small>
-            <strong>Reinaldo Catarino</strong>
-          </div>
+          <a href="#" className="nav-brand" aria-label="Real Connection Workshops">
+            <span className="rc-logo" aria-hidden="true">RC</span>
+            <span className="nav-brand-word">
+              <small>Real Connection</small>
+              <strong>Workshops</strong>
+            </span>
+          </a>
 
           <nav className="nav-links">
             <a href="#organizations">{t.nav.organizations}</a>
@@ -96,7 +106,7 @@ export default function Home() {
               ))}
             </div>
 
-            <a className="btn btn-primary" href="#contact">
+            <a className="btn btn-session" href="#contact">
               {t.nav.freeSession}
             </a>
           </div>
@@ -155,7 +165,7 @@ export default function Home() {
             </p>
 
             <div style={{ display: "flex", gap: 14, flexWrap: "wrap", marginTop: 32 }}>
-              <a className="btn btn-primary" href="#contact">
+              <a className="btn btn-session" href="#contact">
                 {t.hero.ctaPrimary}
               </a>
               <a className="btn btn-secondary" href="#how-we-help">
@@ -181,7 +191,7 @@ export default function Home() {
 
               <div>
                 <div style={{ fontSize: 11, letterSpacing: "0.26em", textTransform: "uppercase", color: "rgba(255,255,255,0.45)", marginBottom: 16 }}>
-                  Reinaldo Catarino
+                  Real Connection Workshops
                 </div>
                 <h2 className="hero-signature">
                   MINDFUL
@@ -210,6 +220,9 @@ export default function Home() {
         style={{ paddingTop: 120, paddingBottom: 120, position: "relative", overflow: "hidden" }}
       >
         {/* Background image — parallax otimizado */}
+        {/* TODO (pedido do Reinaldo, item 3): trocar por foto de dois profissionais
+            olhando um documento em concordância — um líder que inspira + colaborador(a) sorrindo.
+            Basta substituir /public/the_question.PNG mantendo o mesmo nome, ou trocar o src abaixo. */}
         <img
           ref={imgRef}
           src="/the_question.PNG"
@@ -385,7 +398,7 @@ export default function Home() {
                 {t.twoPaths.mergeBody}
               </p>
               <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-                <a className="btn btn-primary" href="#contact">{t.twoPaths.ctaPrimary}</a>
+                <a className="btn btn-session" href="#contact">{t.twoPaths.ctaPrimary}</a>
                 <a className="btn btn-secondary" href="#how-we-help" style={{ borderColor: "rgba(255,255,255,0.3)", color: "white" }}>{t.twoPaths.ctaSecondary}</a>
               </div>
             </div>
@@ -484,7 +497,7 @@ export default function Home() {
                 <h3>{w.title}</h3>
                 <p className="text-body">{w.desc}</p>
                 {w.cta && (
-                  <a href="#contact" className="btn btn-primary" style={{ marginTop: 8, alignSelf: "flex-start" }}>
+                  <a href="#contact" className="btn btn-session" style={{ marginTop: 8, alignSelf: "flex-start" }}>
                     {w.cta}
                   </a>
                 )}
@@ -547,7 +560,7 @@ export default function Home() {
               ))}
             </div>
 
-            <a href="#contact" className="btn" style={{ background: "white", color: "#141210", fontWeight: 600 }}>
+            <a href="#contact" className="btn btn-session" style={{ fontWeight: 600 }}>
               {t.sessionHighlight.cta}
             </a>
           </div>
@@ -587,31 +600,17 @@ export default function Home() {
             <div className="section-label-line" style={{ background: "rgba(255,255,255,0.08)" }} />
           </div>
 
-          <div className="grid-2" style={{ alignItems: "start", gap: 60 }}>
-            <div>
-              <h2 className="title-xl" style={{ color: "white" }}>
-                {t.leadershipMap.title}
-              </h2>
-              <p className="text-lead">{t.leadershipMap.lead}</p>
-              <p className="text-body" style={{ marginTop: 16 }}>
-                {t.leadershipMap.body1}
-              </p>
-              <p className="text-body" style={{ marginTop: 16 }}>
-                {t.leadershipMap.body2}
-              </p>
-            </div>
-
-            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              {t.leadershipMap.faces.map((face) => (
-                <div key={face.label} className="map-face" style={{ background: "rgba(255,255,255,0.06)", backdropFilter: "blur(8px)" }}>
-                  <div className="map-face-dot" />
-                  <div>
-                    <div style={{ fontSize: 14, fontWeight: 500, marginBottom: 3 }}>{face.label}</div>
-                    <div style={{ fontSize: 13, color: "rgba(255,255,255,0.5)", fontWeight: 300 }}>{face.desc}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
+          <div style={{ maxWidth: 760 }}>
+            <h2 className="title-xl" style={{ color: "white" }}>
+              {t.leadershipMap.title}
+            </h2>
+            <p className="text-lead">{t.leadershipMap.lead}</p>
+            <p className="text-body" style={{ marginTop: 16 }}>
+              {t.leadershipMap.body1}
+            </p>
+            <p className="text-body" style={{ marginTop: 16 }}>
+              {t.leadershipMap.body2}
+            </p>
           </div>
         </div>
       </section>
@@ -635,6 +634,16 @@ export default function Home() {
               <p className="text-lead">{t.about.lead}</p>
               <p className="text-body" style={{ marginTop: 18 }}>{t.about.body1}</p>
               <p className="text-body" style={{ marginTop: 18 }}>{t.about.body2}</p>
+
+              <ul className="credentials">
+                {t.about.credentials.map((cred) => (
+                  <li key={cred} className="credential-item">
+                    <span className="credential-mark" aria-hidden="true" />
+                    <span>{cred}</span>
+                  </li>
+                ))}
+              </ul>
+
               <div style={{ marginTop: 28, padding: "20px 24px", background: "rgba(122,101,82,0.08)", borderRadius: 18 }}>
                 <p style={{ fontFamily: '"Cormorant Garamond", Georgia, serif', fontSize: 22, fontWeight: 500, fontStyle: "italic", color: "#2e2520", lineHeight: 1.5, margin: 0 }}>
                   {t.about.quote}
@@ -645,7 +654,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── RESOURCES / BOOKS ─── */}
+      {/* ─── RESOURCES / BOOKS CAROUSEL ─── */}
       <section id="resources" className="section">
         <div className="container">
           <div className="section-label">
@@ -653,25 +662,75 @@ export default function Home() {
             <div className="section-label-line" />
           </div>
 
-          <div style={{ maxWidth: 700 }}>
-            <h2 className="title-xl">{t.resources.title}</h2>
-            <p className="text-lead">{t.resources.lead}</p>
+          <div className="books-head">
+            <div style={{ maxWidth: 700 }}>
+              <h2 className="title-xl">{t.resources.title}</h2>
+              <p className="text-lead">{t.resources.lead}</p>
+            </div>
+            <div className="books-nav">
+              <button type="button" className="books-arrow" aria-label="Previous books" onClick={() => scrollBooks(-1)}>←</button>
+              <button type="button" className="books-arrow" aria-label="Next books" onClick={() => scrollBooks(1)}>→</button>
+            </div>
           </div>
 
-          <div className="books-grid">
-            {t.resources.books.map((book) => (
-              <div key={book.title} className="card book-card">
-                <span className="book-tag">{book.category}</span>
-                <h3>{book.title}</h3>
-                {book.subtitle && (
-                  <div style={{ fontFamily: '"Cormorant Garamond", Georgia, serif', fontSize: 16, color: "var(--muted)", marginBottom: 6, fontStyle: "italic" }}>
-                    {book.subtitle}
+          <div className="books-carousel" ref={booksRef}>
+            {t.resources.books.map((book, i) => (
+              <article key={book.title} className="book-item">
+                <div className={`book-cover book-cover-${i % 6}`}>
+                  <div className="book-spine" aria-hidden="true" />
+                  <div className="book-cover-inner">
+                    <span className="book-tag">{book.category}</span>
+                    <h3 className="book-cover-title">{book.title}</h3>
+                    {book.subtitle && <div className="book-cover-sub">{book.subtitle}</div>}
+                    <div className="book-cover-author">{book.author}</div>
                   </div>
-                )}
-                <div className="book-author">{book.author}</div>
-                <p className="text-body">{book.summary}</p>
-              </div>
+                </div>
+                <p className="book-summary">{book.summary}</p>
+              </article>
             ))}
+          </div>
+
+          <div className="books-hint">{t.resources.eyebrow} · ← →</div>
+        </div>
+      </section>
+
+      {/* ─── TESTIMONIALS ─── */}
+      <section className="section" style={{ background: "var(--paper)" }}>
+        <div className="container">
+          <div className="section-label">
+            <div className="eyebrow">{t.testimonials.eyebrow}</div>
+            <div className="section-label-line" />
+          </div>
+
+          <div style={{ maxWidth: 700, marginBottom: 8 }}>
+            <h2 className="title-xl">{t.testimonials.title}</h2>
+          </div>
+
+          <div className="testimonial-grid">
+            {t.testimonials.items.map((item, i) => (
+              <figure key={i} className="card testimonial-card">
+                <div className="testimonial-quote-mark" aria-hidden="true">&ldquo;</div>
+                <blockquote className="testimonial-quote">{item.quote}</blockquote>
+                <figcaption className="testimonial-author">
+                  <span className="testimonial-name">{item.name}</span>
+                  <span className="testimonial-role">{item.role}</span>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── CONCLUSION ─── */}
+      <section className="section conclusion-section">
+        <div className="container">
+          <div className="conclusion-inner">
+            <div className="eyebrow" style={{ color: "var(--accent)" }}>{t.conclusion.eyebrow}</div>
+            <h2 className="title-xl conclusion-title">{t.conclusion.title}</h2>
+            <p className="conclusion-body">{t.conclusion.body}</p>
+            <a href="#contact" className="btn btn-session" style={{ marginTop: 8 }}>
+              {t.conclusion.cta}
+            </a>
           </div>
         </div>
       </section>
@@ -753,7 +812,7 @@ export default function Home() {
         <div className="container footer-inner">
           <div>
             <div style={{ fontFamily: '"Cormorant Garamond", Georgia, serif', fontSize: 28, fontWeight: 600, letterSpacing: "-0.03em" }}>
-              Reinaldo Catarino
+              Real Connection Workshops
             </div>
             <div className="text-muted" style={{ fontSize: 13, marginTop: 2 }}>{t.footer.subtitle}</div>
           </div>
