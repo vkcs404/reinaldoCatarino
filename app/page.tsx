@@ -138,7 +138,7 @@ export default function Home() {
           style={{
             position: "absolute",
             inset: 0,
-            background: "linear-gradient(90deg, rgba(8,6,4,0.92) 0%, rgba(8,6,4,0.88) 45%, rgba(8,6,4,0.55) 65%, rgba(8,6,4,0.2) 100%)",
+            background: "linear-gradient(90deg, rgba(74,51,32,0.88) 0%, rgba(74,51,32,0.82) 45%, rgba(74,51,32,0.5) 65%, rgba(74,51,32,0.15) 100%)",
             zIndex: 0,
           }}
         />
@@ -155,9 +155,6 @@ export default function Home() {
             </h1>
 
             <p className="text-lead" style={{ maxWidth: 580, color: "rgba(255,255,255,0.85)" }}>
-              <span style={{ display: "block", fontSize: "1.25em", fontWeight: 700, color: "white", lineHeight: 1.35, marginBottom: 14 }}>
-                {t.hero.question}
-              </span>
               {t.hero.body}
             </p>
             <p className="text-lead" style={{ maxWidth: 580, marginTop: 20, fontStyle: "italic", color: "rgba(255,255,255,0.6)" }}>
@@ -220,8 +217,9 @@ export default function Home() {
         style={{ paddingTop: 120, paddingBottom: 120, position: "relative", overflow: "hidden" }}
       >
         {/* Background image — parallax otimizado */}
-        {/* TODO (pedido do Reinaldo, item 3): trocar por foto de dois profissionais
-            olhando um documento em concordância — um líder que inspira + colaborador(a) sorrindo.
+        {/* TODO (foto THE QUESTION): trocar por uma troca saudável — um líder que inspira.
+            Briefing: uma pessoa sentada e outra em pé, a que está em pé concordando
+            (linguagem corporal aberta, aceno de concordância, sem hierarquia agressiva).
             Basta substituir /public/the_question.PNG mantendo o mesmo nome, ou trocar o src abaixo. */}
         <img
           ref={imgRef}
@@ -249,7 +247,7 @@ export default function Home() {
           style={{
             position: "absolute",
             inset: 0,
-            background: "linear-gradient(to bottom, rgba(10,8,6,0.50) 0%, rgba(10,8,6,0.70) 100%)",
+            background: "linear-gradient(to bottom, rgba(74,51,32,0.45) 0%, rgba(74,51,32,0.62) 100%)",
           }}
         />
 
@@ -404,7 +402,7 @@ export default function Home() {
                 style={{
                   position: "absolute",
                   inset: 0,
-                  background: "linear-gradient(20deg, rgba(10,8,6,0.78) 0%, rgba(10,8,6,0.88) 100%)",
+                  background: "linear-gradient(20deg, rgba(74,51,32,0.72) 0%, rgba(74,51,32,0.82) 100%)",
                   zIndex: -1,
                 }}
               />
@@ -456,7 +454,7 @@ export default function Home() {
           style={{
             position: "absolute",
             inset: 0,
-            background: "linear-gradient(to bottom, rgba(8,6,4,0.72) 0%, rgba(8,6,4,0.82) 100%)",
+            background: "linear-gradient(to bottom, rgba(74,51,32,0.66) 0%, rgba(74,51,32,0.76) 100%)",
           }}
         />
 
@@ -523,62 +521,34 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── 11-SESSION HIGHLIGHT ─── */}
-      <section className="section" style={{ paddingTop: 0 }}>
+      {/* ─── BIOS / TEAM ─── */}
+      <section id="team" className="section" style={{ paddingTop: 0 }}>
         <div className="container">
-          <div className="session-cta" style={{ position: "relative", overflow: "hidden", isolation: "isolate" }}>
-            <img
-              src="/signature_program.JPG"
-              alt=""
-              aria-hidden="true"
-              style={{
-                position: "absolute",
-                inset: 0,
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                objectPosition: "center center",
-                zIndex: -2,
-                pointerEvents: "none",
-              }}
-            />
-            <div
-              aria-hidden="true"
-              style={{
-                position: "absolute",
-                inset: 0,
-                background: "linear-gradient(160deg, rgba(10,8,6,0.86) 0%, rgba(10,8,6,0.7) 60%, rgba(10,8,6,0.86) 100%)",
-                zIndex: -1,
-              }}
-            />
-            <div className="eyebrow" style={{ color: "rgba(255,255,255,0.4)" }}>{t.sessionHighlight.eyebrow}</div>
-            <h2 className="title-xl" style={{ color: "white", marginTop: 14, maxWidth: 620 }}>
-              {t.sessionHighlight.title}
-            </h2>
-            <p className="text-lead" style={{ color: "rgba(255,255,255,0.7)", maxWidth: 560, margin: "20px 0 36px" }}>
-              {t.sessionHighlight.lead}
-            </p>
+          <div className="section-label">
+            <div className="eyebrow">{t.team.eyebrow}</div>
+            <div className="section-label-line" />
+          </div>
 
-            <div className="grid-3" style={{ gap: 14, marginBottom: 36 }}>
-              {t.sessionHighlight.features.map((item) => (
-                <div key={item} style={{
-                  background: "rgba(255,255,255,0.08)",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  borderRadius: 14,
-                  padding: "14px 18px",
-                  fontSize: 14,
-                  color: "rgba(255,255,255,0.78)",
-                  fontWeight: 300,
-                  backdropFilter: "blur(8px)",
-                }}>
-                  {item}
+          <div style={{ maxWidth: 700, marginBottom: 8 }}>
+            <h2 className="title-xl">{t.team.title}</h2>
+            <p className="text-lead">{t.team.lead}</p>
+          </div>
+
+          <div className="bio-grid">
+            {t.team.members.map((m) => (
+              <div key={m.id} className="card bio-card">
+                {/* TODO: colocar as fotos reais em /public (bio-reinaldo.jpg, bio-daniela.jpg, bio-paula.jpg) */}
+                <div className="bio-photo">
+                  <img src={m.photo} alt={m.name} loading="lazy" />
+                  <span className="bio-initial">{m.name.charAt(0)}</span>
                 </div>
-              ))}
-            </div>
-
-            <a href="#contact" className="btn btn-session" style={{ fontWeight: 600 }}>
-              {t.sessionHighlight.cta}
-            </a>
+                <div>
+                  <h3 className="bio-name">{m.name}</h3>
+                  <div className="bio-role">{m.role}</div>
+                </div>
+                <p className="text-body" style={{ margin: 0 }}>{m.bio}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -606,7 +576,7 @@ export default function Home() {
           style={{
             position: "absolute",
             inset: 0,
-            background: "linear-gradient(100deg, rgba(10,8,6,0.92) 0%, rgba(10,8,6,0.8) 45%, rgba(10,8,6,0.6) 100%)",
+            background: "linear-gradient(100deg, rgba(74,51,32,0.86) 0%, rgba(74,51,32,0.74) 45%, rgba(74,51,32,0.55) 100%)",
             zIndex: 0,
           }}
         />
@@ -774,7 +744,7 @@ export default function Home() {
           style={{
             position: "absolute",
             inset: 0,
-            background: "linear-gradient(100deg, rgba(10,8,6,0.75) 0%, rgba(10,8,6,0.68) 50%, rgba(10,8,6,0.65) 100%)",
+            background: "linear-gradient(100deg, rgba(74,51,32,0.7) 0%, rgba(74,51,32,0.63) 50%, rgba(74,51,32,0.6) 100%)",
             zIndex: 0,
           }}
         />

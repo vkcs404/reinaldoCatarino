@@ -1071,3 +1071,71 @@ img { display: block; max-width: 100%; }
   .nav-brand-word small { display: none; }
   .book-item { flex-basis: 82vw; width: 82vw; }
 }
+
+/* ─── Bios / Team ─── */
+.bio-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 40px;
+}
+.bio-card {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  transition: transform 0.2s;
+}
+.bio-card:hover { transform: translateY(-3px); }
+.bio-photo {
+  position: relative;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: linear-gradient(135deg, #1c1814, #2e2218);
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bio-photo img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* fallback: enquanto a foto real não existir, aparece a inicial */
+.bio-initial {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 38px;
+  font-weight: 600;
+  color: rgba(200, 184, 159, 0.85);
+}
+.bio-name {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin: 0 0 6px;
+}
+.bio-role {
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+@media (max-width: 1080px) {
+  .bio-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 720px) {
+  .bio-grid { grid-template-columns: 1fr; }
+}

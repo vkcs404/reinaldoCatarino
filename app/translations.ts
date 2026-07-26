@@ -20,7 +20,6 @@ export const translations = {
       eyebrow: "Presence · Awareness · Emotional Intelligence",
       headline1: "REAL CONNECTION",
       headline2: "WORKSHOPS",
-      question: "Are you a leader who inspires, or a leader who manages a functional team?",
       body: "In today's fast-paced world, millions of professionals walk into work feeling disconnected, uninspired, and drained by their environment. Outdated management tactics no longer work; today's high-performance teams demand an ecosystem rooted in human-centric leadership and mutual respect.",
       personalQuestion: "How do you experience leadership in your life: at home, at work, with your family, in traffic, at the supermarket?",
       ctaPrimary: "Schedule a Free Session →",
@@ -42,7 +41,7 @@ export const translations = {
 
     questionSection: {
       eyebrow: "The Question",
-      title: "Are you a leader who inspires — or one who manages?",
+      title: "Are you a leader who inspires — or a leader who manages a functional team?",
       lead: "Great Leadership is more than keeping a team on track — it's about inspiring people to move with purpose. While strong management ensures structure, efficiency, and results, true leadership sparks motivation and brings out the best in others.",
       body: "When direction and inspiration come together, teams don't just function — they thrive.",
     },
@@ -57,9 +56,9 @@ export const translations = {
         sub: "A journey of self-awareness, presence, and inner transformation.",
         items: [
           { label: "This Wonderful and Invisible World of Energy", desc: "Explore how presence and energy quietly shape every interaction you lead." },
-          { label: "What's your superpower?", desc: "Discover the unique strengths that define you." },
-          { label: "Power of words", desc: "Language shapes reality — learn to use it intentionally." },
-          { label: "Discover Your Communication Strengths through Self-Knowledge", desc: "Turn self-awareness into clearer, more authentic communication." },
+          { label: "What's Your Superpower?", desc: "Discover the unique strengths that define you." },
+          { label: "The Power of Words", desc: "Language shapes reality — learn to use it intentionally." },
+          { label: "Discover Your Communication Strengths Through Self-Knowledge", desc: "Turn self-awareness into clearer, more authentic communication." },
         ],
       },
       corporate: {
@@ -67,10 +66,10 @@ export const translations = {
         title: "Leadership transforms teams",
         sub: "Practical tools to lead people, resolve conflict, and build culture.",
         items: [
-          { label: "Co-leadership", desc: "Lead alongside peers and multiply collective impact." },
-          { label: "Conflict resolution", desc: "Turn tension into a catalyst for growth and alignment." },
-          { label: "Anatomy of a team", desc: "Understand what makes teams thrive beyond individual talent." },
-          { label: "Behavioral change", desc: "Shift mindset and build lasting change in organizational culture." },
+          { label: "Co-Leadership", desc: "Lead alongside peers and multiply collective impact." },
+          { label: "Conflict Resolution", desc: "Turn tension into a catalyst for growth and alignment." },
+          { label: "The Anatomy of a Team", desc: "Understand what makes teams thrive beyond individual talent." },
+          { label: "Behavioral Change", desc: "Shift mindset and build lasting change in organizational culture." },
         ],
       },
       mergePersonalTag: "Personal track",
@@ -109,12 +108,34 @@ export const translations = {
       ],
     },
 
-    sessionHighlight: {
-      eyebrow: "Signature Program",
-      title: "The 11-Session Transformation Journey",
-      lead: "This is a dedicated path for developing your Leader Within and creating a lasting positive impact. It's designed to redefine the architecture of your leadership and how you respond to life events.",
-      features: ["11 structured sessions", "Individual or small group", "In-person or online", "Free assessment session", "Personal & professional application", "Ongoing guidance & depth"],
-      cta: "Schedule a Free Session →",
+    team: {
+      eyebrow: "Who We Are",
+      title: "The people behind Real Connection Workshops",
+      lead: "Three trajectories, one conviction: performance and humanity grow together.",
+      // TODO: replace with the real bios and photos (/public/bio-*.jpg).
+      members: [
+        {
+          id: "reinaldo",
+          name: "Reinaldo Catarino",
+          role: "Founder & Lead Facilitator",
+          photo: "/bio-reinaldo.jpg",
+          bio: "[Placeholder] Reinaldo's biography — career, background, what led him to human-centric leadership and the creation of Real Connection Workshops.",
+        },
+        {
+          id: "daniela",
+          name: "Daniela",
+          role: "Facilitator",
+          photo: "/bio-daniela.jpg",
+          bio: "[Placeholder] Daniela's biography — background, expertise, and the perspective she brings to the work.",
+        },
+        {
+          id: "paula",
+          name: "Paula",
+          role: "Facilitator & Coach",
+          photo: "/bio-paula.jpg",
+          bio: "My career began in Engineering, but I soon discovered that my true passion was understanding and developing people. That realization led me to pursue leadership development and coaching, earning certifications through the Co-Active Training Institute (CTI) and the International Coaching Federation (ICF) in 2018, followed by advanced studies in neuroscience, transformational coaching, and sex and relationship coaching. Today, I work with both individuals and organizations, helping people develop greater self-awareness, strengthen communication, lead with authenticity, and create meaningful, lasting change. While I value one-on-one coaching, my greatest passion is facilitating transformative workshops where collective learning and shared experiences unlock powerful personal and professional growth. By combining intuition, analytical thinking, and a deep curiosity about human behavior, I create spaces where people gain clarity, build stronger connections, and step into their full potential.",
+        },
+      ],
     },
 
     leadershipMap: {
@@ -218,7 +239,6 @@ export const translations = {
       eyebrow: "Presença · Consciência · Inteligência Emocional",
       headline1: "REAL CONNECTION",
       headline2: "WORKSHOPS",
-      question: "Você é um líder que inspira, ou um líder que gerencia uma equipe funcional?",
       body: "No mundo acelerado de hoje, milhões de profissionais chegam ao trabalho se sentindo desconectados, desmotivados e esgotados pelo ambiente. Táticas de gestão ultrapassadas não funcionam mais; as equipes de alta performance de hoje exigem um ecossistema enraizado em uma liderança centrada no humano e no respeito mútuo.",
       personalQuestion: "Como você experiencia a liderança na sua vida: em casa, no trabalho, com seus familiares, no trânsito, no supermercado?",
       ctaPrimary: "Agende uma Sessão Gratuita →",
@@ -240,7 +260,7 @@ export const translations = {
 
     questionSection: {
       eyebrow: "A Pergunta",
-      title: "Você é um líder que inspira — ou que gerencia?",
+      title: "Você é um líder que inspira — ou um líder que gerencia uma equipe funcional?",
       lead: "A grande liderança vai além de manter a equipe nos trilhos — é sobre inspirar pessoas a se moverem com propósito. Uma gestão forte garante estrutura, eficiência e resultados, mas a verdadeira liderança acende a motivação e revela o melhor nas pessoas.",
       body: "Quando direção e inspiração se encontram, as equipes não apenas funcionam — elas florescem.",
     },
@@ -267,7 +287,7 @@ export const translations = {
         items: [
           { label: "Co-liderança", desc: "Lidere ao lado de pares e multiplique o impacto coletivo." },
           { label: "Resolução de conflitos", desc: "Transforme tensão em catalisador de crescimento e alinhamento." },
-          { label: "Anatomia de uma equipe", desc: "Entenda o que faz as equipes prosperarem além do talento individual." },
+          { label: "A anatomia de uma equipe", desc: "Entenda o que faz as equipes prosperarem além do talento individual." },
           { label: "Mudança comportamental", desc: "Transforme mentalidade e construa mudanças duradouras na cultura organizacional." },
         ],
       },
@@ -307,12 +327,33 @@ export const translations = {
       ],
     },
 
-    sessionHighlight: {
-      eyebrow: "Programa Assinatura",
-      title: "Uma Jornada de Transformação — 11 Sessões",
-      lead: "Este é um caminho dedicado para desenvolver o seu Líder Interior e criar um impacto positivo duradouro. Foi desenhado para redefinir a arquitetura da sua liderança e como você responde aos eventos da vida.",
-      features: ["11 sessões estruturadas", "Individual ou grupo pequeno", "Presencial ou online", "Sessão de avaliação gratuita", "Aplicação pessoal & profissional", "Orientação contínua & profundidade"],
-      cta: "Agende uma Sessão Gratuita →",
+    team: {
+      eyebrow: "Quem Somos",
+      title: "As pessoas por trás do Real Connection Workshops",
+      lead: "Três trajetórias, uma convicção: performance e humanidade crescem juntas.",
+      members: [
+        {
+          id: "reinaldo",
+          name: "Reinaldo Catarino",
+          role: "Fundador & Facilitador Principal",
+          photo: "/bio-reinaldo.jpg",
+          bio: "[Placeholder] Biografia do Reinaldo — trajetória, formação e o que o levou à liderança humanizada e à criação do Real Connection Workshops.",
+        },
+        {
+          id: "daniela",
+          name: "Daniela",
+          role: "Facilitadora",
+          photo: "/bio-daniela.jpg",
+          bio: "[Placeholder] Biografia da Daniela — trajetória, especialidade e a perspectiva que ela traz para o trabalho.",
+        },
+        {
+          id: "paula",
+          name: "Paula",
+          role: "Facilitadora & Coach",
+          photo: "/bio-paula.jpg",
+          bio: "Minha carreira começou na Engenharia, mas logo descobri que minha verdadeira paixão era entender e desenvolver pessoas. Essa percepção me levou ao desenvolvimento de liderança e ao coaching, conquistando certificações pelo Co-Active Training Institute (CTI) e pela International Coaching Federation (ICF) em 2018, seguidas de estudos avançados em neurociência, coaching transformacional e coaching de sexo e relacionamentos. Hoje, trabalho tanto com indivíduos quanto com organizações, ajudando as pessoas a desenvolver mais autoconhecimento, fortalecer a comunicação, liderar com autenticidade e criar mudanças significativas e duradouras. Embora eu valorize o coaching individual, minha maior paixão é facilitar workshops transformadores, onde o aprendizado coletivo e as experiências compartilhadas destravam um poderoso crescimento pessoal e profissional. Combinando intuição, pensamento analítico e uma profunda curiosidade sobre o comportamento humano, crio espaços onde as pessoas ganham clareza, constroem conexões mais fortes e alcançam todo o seu potencial.",
+        },
+      ],
     },
 
     leadershipMap: {
@@ -416,7 +457,6 @@ export const translations = {
       eyebrow: "Presencia · Consciencia · Inteligencia Emocional",
       headline1: "REAL CONNECTION",
       headline2: "WORKSHOPS",
-      question: "¿Eres un líder que inspira, o un líder que gestiona un equipo funcional?",
       body: "En el mundo acelerado de hoy, millones de profesionales llegan al trabajo sintiéndose desconectados, desmotivados y agotados por su entorno. Las tácticas de gestión obsoletas ya no funcionan; los equipos de alto rendimiento de hoy exigen un ecosistema basado en un liderazgo centrado en las personas y el respeto mutuo.",
       personalQuestion: "¿Cómo experimentas el liderazgo en tu vida: en casa, en el trabajo, con tus familiares, en el tráfico, en el supermercado?",
       ctaPrimary: "Agenda una Sesión Gratuita →",
@@ -438,7 +478,7 @@ export const translations = {
 
     questionSection: {
       eyebrow: "La Pregunta",
-      title: "¿Eres un líder que inspira — o uno que gestiona?",
+      title: "¿Eres un líder que inspira — o un líder que gestiona un equipo funcional?",
       lead: "El gran liderazgo es más que mantener al equipo en marcha — se trata de inspirar a las personas a moverse con propósito. Una gestión sólida garantiza estructura, eficiencia y resultados, pero el verdadero liderazgo enciende la motivación y revela lo mejor de las personas.",
       body: "Cuando la dirección y la inspiración se encuentran, los equipos no solo funcionan — florecen.",
     },
@@ -465,7 +505,7 @@ export const translations = {
         items: [
           { label: "Co-liderazgo", desc: "Lidera junto a tus pares y multiplica el impacto colectivo." },
           { label: "Resolución de conflictos", desc: "Convierte la tensión en un catalizador de crecimiento y alineación." },
-          { label: "Anatomía de un equipo", desc: "Comprende qué hace prosperar a los equipos más allá del talento individual." },
+          { label: "La anatomía de un equipo", desc: "Comprende qué hace prosperar a los equipos más allá del talento individual." },
           { label: "Cambio de comportamiento", desc: "Transforma la mentalidad y construye cambios duraderos en la cultura organizacional." },
         ],
       },
@@ -505,12 +545,33 @@ export const translations = {
       ],
     },
 
-    sessionHighlight: {
-      eyebrow: "Programa Insignia",
-      title: "El Viaje de Transformación — 11 Sesiones",
-      lead: "Este es un camino dedicado para desarrollar tu Líder Interior y crear un impacto positivo duradero. Está diseñado para redefinir la arquitectura de tu liderazgo y cómo respondes a los eventos de la vida.",
-      features: ["11 sesiones estructuradas", "Individual o grupo pequeño", "Presencial u online", "Sesión de evaluación gratuita", "Aplicación personal & profesional", "Orientación continua & profundidad"],
-      cta: "Agenda una Sesión Gratuita →",
+    team: {
+      eyebrow: "Quiénes Somos",
+      title: "Las personas detrás de Real Connection Workshops",
+      lead: "Tres trayectorias, una convicción: el rendimiento y la humanidad crecen juntos.",
+      members: [
+        {
+          id: "reinaldo",
+          name: "Reinaldo Catarino",
+          role: "Fundador & Facilitador Principal",
+          photo: "/bio-reinaldo.jpg",
+          bio: "[Placeholder] Biografía de Reinaldo — trayectoria, formación y lo que lo llevó al liderazgo humano y a la creación de Real Connection Workshops.",
+        },
+        {
+          id: "daniela",
+          name: "Daniela",
+          role: "Facilitadora",
+          photo: "/bio-daniela.jpg",
+          bio: "[Placeholder] Biografía de Daniela — trayectoria, especialidad y la perspectiva que aporta al trabajo.",
+        },
+        {
+          id: "paula",
+          name: "Paula",
+          role: "Facilitadora & Coach",
+          photo: "/bio-paula.jpg",
+          bio: "Mi carrera comenzó en la Ingeniería, pero pronto descubrí que mi verdadera pasión era comprender y desarrollar a las personas. Esa comprensión me llevó al desarrollo del liderazgo y al coaching, obteniendo certificaciones del Co-Active Training Institute (CTI) y de la International Coaching Federation (ICF) en 2018, seguidas de estudios avanzados en neurociencia, coaching transformacional y coaching de sexo y relaciones. Hoy trabajo tanto con individuos como con organizaciones, ayudando a las personas a desarrollar mayor autoconocimiento, fortalecer la comunicación, liderar con autenticidad y crear cambios significativos y duraderos. Aunque valoro el coaching individual, mi mayor pasión es facilitar talleres transformadores donde el aprendizaje colectivo y las experiencias compartidas liberan un poderoso crecimiento personal y profesional. Combinando intuición, pensamiento analítico y una profunda curiosidad por el comportamiento humano, creo espacios donde las personas ganan claridad, construyen conexiones más fuertes y alcanzan todo su potencial.",
+        },
+      ],
     },
 
     leadershipMap: {
